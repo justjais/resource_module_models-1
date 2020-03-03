@@ -1,2 +1,2 @@
-# resource_module_models
-Resource module models
+# Resource module models
+
