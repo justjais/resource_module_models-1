@@ -1,0 +1,62 @@
+# Using merged
+
+# Before state:
+# -------------
+#
+# ciscoasa# sh running-config object-group
+# object-group network test_og_network
+#  description test network og
+#  network-object host 192.168.1.1
+# object-group service test_og_service
+
+- name: Merge provided OG configuration with device configuration
+  asa_og:
+    config:
+      - name: test_network_og
+        object: network
+        description: test network og
+        object_type:
+          network_object:
+            - host: true
+              ip_address: 192.0.2.1
+            - ip_address: 198.51.100.0
+              ip_mask: 255.255.255.0
+        group_object: test_og_network
+      - name: test_og_service
+        object: service
+        description: test service og
+        object_type:
+          service_object:
+            - protocol: ipinip
+            - protocol: tcp-udp
+    state: merged
+
+# Commands fired:
+# ---------------
+#
+# object-group network test_network_og
+# description test network og
+# network-object host 192.0.2.1
+# network-object 198.51.100.0 255.255.255.0
+# group-object test_og_network
+# object-group service test_og_service
+# description test service og
+# service-object ipinip
+# service-object tcp-udp
+
+# After state:
+# ------------
+#
+# ciscoasa# sh running-config object-group
+# object-group network test_og_network
+#  description test network og
+#  network-object host 192.168.1.1
+# object-group network test_network_og
+#  description test network og
+#  network-object 192.0.2.0 255.255.255.0
+#  network-object 192.51.110.0 255.255.255.0
+#  group-object test_og_network
+# object-group service test_og_service
+#  description test service og
+#  service-object ipinip
+#  service-object tcp-udp
