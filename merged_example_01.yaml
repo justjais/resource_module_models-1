@@ -15,20 +15,19 @@
       - name: test_network_og
         object: network
         description: test network og
-        object_type:
-          network_object:
-            - host: true
-              ip_address: 192.0.2.1
-            - ip_address: 198.51.100.0
-              ip_mask: 255.255.255.0
+        network_object:
+          - host: true
+            ip_address: 192.0.2.1
+          - ip_address: 198.51.100.0
+            ip_mask: 255.255.255.0
         group_object: test_og_network
       - name: test_og_service
         object: service
         description: test service og
-        object_type:
-          service_object:
-            - protocol: ipinip
-            - protocol: tcp-udp
+        service_object:
+          protocol:
+            - ipinip
+            - tcp-udp
     state: merged
 
 # Commands fired:

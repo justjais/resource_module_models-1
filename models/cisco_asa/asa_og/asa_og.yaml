@@ -40,84 +40,77 @@ options:
           - security
           - service
           - user
-      object_type:
-        description: To configure the object-group type.
+      icmp-object:
+        description: Configure an ICMP-type object
+        type: dict
+        suboptions:
+          icmp_type:
+            description: Defines the ICMP types in the group.
+            type: list
+            choices: [alternate_address, conversion_error, echo, echo_reply, information_reply, information_request,
+            mask_reply, mask_request, mobile_redirect, parameter_problem, redirect, router_advertisement,
+            router_solicitation, source_quench, time_exceeded, timestamp_reply, timestamp_request, traceroute,
+            unreachable]
+      network_object:
+        description: Configure a network object
+        type: list
         element: dict
         suboptions:
-          icmp-object:
-            description: Configure an ICMP-type object
+          host:
+            description: Set this to specify a single host object.
+            type: bool
+          ip_address:
+            description: Enter an IPv4/host IP network address.
+            type: str
+          ip_mask:
+            description: Enter an IPv4 network mask.
+            type: str
+          ipv6_address:
+            description: Enter an IPv6 prefix/host IPv6 address.
+            type: str
+          object:
+            description: Enter this keyword to specify a network object
+            type: str
+      protocol_object:
+        description: Configure a protocol object
+        type: dict
+        suboptions:
+          protocol:
+            description: Defines the protocols in the group.
             type: list
-            element: dict
-            suboptions:
-              icmp_type:
-                description: Defines the ICMP types in the group.
-                type: str
-                choices: [alternate_address, conversion_error, echo, echo_reply, information_reply, information_request,
-                mask_reply, mask_request, mobile_redirect, parameter_problem, redirect, router_advertisement,
-                router_solicitation, source_quench, time_exceeded, timestamp_reply, timestamp_request, traceroute,
-                unreachable]
-          network_object:
-            description: Configure a network object
+            choices: [ah, eigrp, esp, gre, icmp, icmp6, igmp, igrp, ip, ipinip, ipsec, nos, ospf, pcp, pim, pptp,
+            sctp, snp, tcp, udp]
+      security_group:
+        description: Configure a security-group
+        type: list
+        element: dict
+        suboptions:
+          name:
+            description: Enter this keyword to specify a security-group name.
+            type: str
+          tag:
+            description: Enter this keyword to specify a security-group tag.
+            type: str
+      service_object:
+        description: Configure a service object
+        type: dict
+        suboptions:
+          protocol:
+            description: Defines the protocols in the group.
             type: list
-            element: dict
-            suboptions:
-              host:
-                description: Set this to specify a single host object.
-                type: bool
-              ip_address:
-                description: Enter an IPv4/host IP network address.
-                type: str
-              ip_mask:
-                description: Enter an IPv4 network mask.
-                type: str
-              ipv6_address:
-                description: Enter an IPv6 prefix/host IPv6 address.
-                type: str
-              object:
-                description: Enter this keyword to specify a network object
-                type: str
-          protocol_object:
-            description: Configure a protocol object
-            type: list
-            element: dict
-            suboptions:
-              protocol:
-                description: Defines the protocols in the group.
-                type: str
-                choices: [ah, eigrp, esp, gre, icmp, icmp6, igmp, igrp, ip, ipinip, ipsec, nos, ospf, pcp, pim, pptp,
-                sctp, snp, tcp, udp]
-          security_group:
-            description: Configure a security-group
-            type: list
-            element: dict
-            suboptions:
-              name:
-                description: Enter this keyword to specify a security-group name.
-                type: str
-              tag:
-                description: Enter this keyword to specify a security-group tag.
-                type: str
-          service_object:
-            description: Configure a service object
-            type: list
-            element: dict
-            suboptions:
-              protocol:
-                description: Defines the protocols in the group.
-                type: str
-                choices: [ah, eigrp, esp, gre, icmp, icmp6, igmp, igrp, ip, ipinip, ipsec, nos, ospf, pcp, pim, pptp,
-                sctp, snp, tcp, tcp_udp, udp]
-              object:
-                description: Enter this keyword to specify a service object
-                type: str
-          user_group:
-            description: Configure a user group object
-            type: list
-            element: dict
-            suboptions:
-              name:
-                description: Group name.
-                type: str
+            choices: [ah, eigrp, esp, gre, icmp, icmp6, igmp, igrp, ip, ipinip, ipsec, nos, ospf, pcp, pim, pptp,
+            sctp, snp, tcp, tcp-udp, udp]
+          object:
+            description: Enter this keyword to specify a service object
+            type: str
+      user_group:
+        description: Configure a user group object
+        type: list
+        element: dict
+        suboptions:
+          name:
+            description: Group name.
+            type: str
       group_object:
         description:
           - Configure an object group as an object.
